@@ -513,6 +513,29 @@ function updateAnalytics() {
     showNotification('Analytics updated successfully!');
 }
 
+function showPredictionAnalysisOnAnalytics(result, student) {
+    const analysisDiv = document.getElementById('predictionAnalysisAnalytics');
+    const contentDiv = document.getElementById('predictionAnalysisContentAnalytics');
+    contentDiv.innerHTML = `
+        <div class="ai-insights">
+            <div class="insight-item">
+                <strong>Student:</strong> ${student.name} (${student.id})
+            </div>
+            <div class="insight-item">
+                <strong>AI Tool Dependency:</strong> ${result.ai_tool_dependency}%
+            </div>
+            <div class="insight-item">
+                <strong>Recommendation:</strong> ${result.ai_tool_dependency > 80 ? 
+                    'Implement AI usage reduction strategy and increase hands-on learning activities' : 
+                    result.ai_tool_dependency > 60 ? 
+                    'Monitor AI tool usage and encourage independent problem-solving' : 
+                    'Continue current learning approach with periodic AI tool integration'}
+            </div>
+        </div>
+    `;
+    analysisDiv.style.display = 'block';
+}
+
 function generatePrediction() {
     const studentId = document.getElementById('studentId').value;
     const horizon = document.getElementById('predictionHorizon').value;
@@ -588,6 +611,7 @@ function generatePrediction() {
             </div>
         `;
         predictionResults.style.display = 'block';
+        showPredictionAnalysisOnAnalytics(result, student);
         showNotification('Prediction generated successfully!');
     })
     .catch(error => {
