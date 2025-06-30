@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliGrade - AI Academic Performance Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div><b> IntelliGrade </b></div>
+            <nav class="nav-menu">
+                <div class="nav-item active" data-tab="dashboard">Dashboard</div>
+                <div class="nav-item" data-tab="analytics">Analytics</div>
+                <div class="nav-item" data-tab="predictions">Predictions</div>
+                <div class="nav-item" data-tab="settings">Settings</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="dashboard-tab" class="tab-content">
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Total Students</h3>
+                        <div class="card-icon"></div>
+                    </div>
+                    <div class="metric-value" id="totalStudents">247</div>
+                    <div class="metric-label">Active learners</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">AI Tool Usage</h3>
+                        <div class="card-icon"></div>
+                    </div>
+                    <div class="metric-value" id="aiUsage">73%</div>
+                    <div class="metric-label">Average dependency rate</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 73%"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">At-Risk Students</h3>
+                        <div class="card-icon"></div>
+                    </div>
+                    <div class="metric-value" id="atRiskStudents">18</div>
+                    <div class="metric-label">Requiring intervention</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 22%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="chart-container">
+                    <h3 class="chart-title">Performance Prediction Trends</h3>
+                    <canvas id="performanceChart" class="chart"></canvas>
+                </div>
+
+                <div class="student-list">
+                    <h3 class="chart-title">High-Risk Students</h3>
+                    <div id="studentList">
+                        <!-- Students will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="ai-insights">
+                <h3 class="chart-title">Generated Insights</h3>
+                <div id="insightsList">
+                    <!-- Insights will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div id="analytics-tab" class="tab-content" style="display: none;">
+            <div class="controls-panel">
+                <div class="control-group">
+                    <label class="control-label">Time Period</label>
+                    <select class="control-input" id="timePeriod">
+                        <option value="week">Last Week</option>
+                        <option value="month" selected>Last Month</option>
+                        <option value="semester">This Semester</option>
+                        <option value="year">Academic Year</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Course Filter</label>
+                    <select class="control-input" id="courseFilter">
+                        <option value="all">All Courses</option>
+                        <option value="math">Mathematics</option>
+                        <option value="science">Science</option>
+                        <option value="english">English</option>
+                        <option value="history">History</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">AI Tool Category</label>
+                    <select class="control-input" id="aiToolFilter">
+                        <option value="all">All Tools</option>
+                        <option value="writing">Writing Assistants</option>
+                        <option value="math">Math Solvers</option>
+                        <option value="research">Research Tools</option>
+                        <option value="coding">Code Assistants</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <button class="btn btn-primary" onclick="updateAnalytics()">Update Analysis</button>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">AI Tool Dependency Analysis</h3>
+                <canvas id="dependencyChart" class="chart"></canvas>
+            </div>
+        </div>
+
+        <div id="predictions-tab" class="tab-content" style="display: none;">
+            <div class="controls-panel">
+                <div class="control-group">
+                    <label class="control-label">Student ID</label>
+                    <input type="text" class="control-input" id="studentId" placeholder="Enter student ID">
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Prediction Horizon</label>
+                    <select class="control-input" id="predictionHorizon">
+                        <option value="1">Next Week</option>
+                        <option value="4">Next Month</option>
+                        <option value="12" selected>Next Quarter</option>
+                        <option value="24">Next Semester</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <button class="btn btn-primary" onclick="generatePrediction()">Generate Prediction</button>
+                </div>
+            </div>
+
+            <div id="predictionResults" class="chart-container" style="display: none;">
+                <h3 class="chart-title">Prediction Results</h3>
+                <div id="predictionContent"></div>
+            </div>
+        </div>
+
+        <div id="settings-tab" class="tab-content" style="display: none;">
+            <div class="controls-panel">
+                <div class="control-group">
+                    <label class="control-label">Model Configuration</label>
+                    <select class="control-input" id="modelType">
+                        <option value="ensemble">Ensemble Model</option>
+                        <option value="neural">Neural Network</option>
+                        <option value="gradient">Gradient Boosting</option>
+                        <option value="random">Random Forest</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Alert Threshold</label>
+                    <input type="range" class="control-input" id="alertThreshold" min="0" max="100" value="75">
+                    <span id="thresholdValue">75%</span>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Data Refresh Rate</label>
+                    <select class="control-input" id="refreshRate">
+                        <option value="realtime">Real-time</option>
+                        <option value="hourly">Hourly</option>
+                        <option value="daily" selected>Daily</option>
+                        <option value="weekly">Weekly</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="studentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Student Details</h2>
+            <div id="modalContent">
+                <!-- Student details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
