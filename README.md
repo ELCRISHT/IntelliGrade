@@ -61,6 +61,13 @@ IntelliGrade/
 - **Reed Lajom**
 
 ## License
+**Proprietary & Academic Use Only**
+
+This software is a thesis web application developed for academic purposes only. 
+
+**Unauthorized use, distribution, reproduction, or modification of this application or any part thereof is strictly prohibited.**
+
+No part of this application may be used for commercial, educational, or research purposes outside the original thesis project without explicit written permission from the developers.
 
 ---
 For questions or contributions, please contact the developers or open an issue on the [GitHub repository](https://github.com/ELCRISHT/IntelliGrade).
