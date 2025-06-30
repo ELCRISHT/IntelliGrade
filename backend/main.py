@@ -34,7 +34,8 @@ def ai_tool_usage():
         "tools": [
             {"name": "ChatGPT", "usage_count": 42},
             {"name": "Grammarly", "usage_count": 30},
-            {"name": "Quillbot", "usage_count": 15}
+            {"name": "Quillbot", "usage_count": 15},
+            {"name": "Gemini", "usage_count": 10},
         ]
     })
 

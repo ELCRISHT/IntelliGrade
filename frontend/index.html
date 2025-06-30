@@ -130,17 +130,16 @@
                     <input type="text" class="control-input" id="studentId" placeholder="Enter student ID">
                 </div>
                 <div class="control-group">
-                    <label class="control-label">Prediction Horizon</label>
+                    <label class="control-label">Prediction</label>
                     <select class="control-input" id="predictionHorizon">
                         <option value="1">Next Week</option>
                         <option value="4">Next Month</option>
-                        <option value="12" selected>Next Quarter</option>
                         <option value="24">Next Semester</option>
                     </select>
                 </div>
-                <div class="control-group">
-                    <button class="btn btn-primary" onclick="generatePrediction()">Generate Prediction</button>
-                </div>
+            </div>
+            <div class="centered-btn">
+                <button class="btn btn-primary" onclick="generatePrediction()">Generate Prediction</button>
             </div>
 
             <div id="predictionResults" class="chart-container" style="display: none;">

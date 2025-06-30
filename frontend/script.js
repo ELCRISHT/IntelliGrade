@@ -533,72 +533,67 @@ function generatePrediction() {
 
     const predictionResults = document.getElementById('predictionResults');
     const predictionContent = document.getElementById('predictionContent');
-    
-    // Generate prediction based on current data
-    const currentPerformance = student.gpa * 25; // Convert GPA to percentage
-    const aiDependency = student.aiUsage;
-    const riskFactor = aiDependency > 80 ? 0.8 : aiDependency > 60 ? 0.9 : 1.0;
-    
-    const predictedPerformance = Math.max(0, Math.min(100, 
-        currentPerformance * riskFactor + (Math.random() * 10 - 5)
-    ));
-    
-    const trend = predictedPerformance > currentPerformance ? 'improving' : 'declining';
-    const confidence = Math.floor(85 + Math.random() * 10);
-    
-    predictionContent.innerHTML = `
-        <div class="dashboard-grid">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Current Performance</h3>
-                    <div class="card-icon"></div>
+
+    // Prepare data for backend
+    const payload = {
+        student_id: student.id,
+        ai_tool_usage: student.aiUsage,
+        gpa: student.gpa,
+        horizon: horizon
+    };
+
+    fetch('/api/forecast', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(result => {
+        predictionContent.innerHTML = `
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Predicted Grade</h3>
+                        <div class="card-icon"></div>
+                    </div>
+                    <div class="metric-value">${result.predicted_grade}</div>
+                    <div class="metric-label">Confidence: ${(result.confidence * 100).toFixed(1)}%</div>
                 </div>
-                <div class="metric-value">${currentPerformance.toFixed(1)}%</div>
-                <div class="metric-label">GPA: ${student.gpa}</div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Predicted Performance</h3>
-                    <div class="card-icon"></div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">AI Tool Dependency</h3>
+                        <div class="card-icon"></div>
+                    </div>
+                    <div class="metric-value">${result.ai_tool_dependency}%</div>
+                    <div class="metric-label">Reported by backend</div>
                 </div>
-                <div class="metric-value">${predictedPerformance.toFixed(1)}%</div>
-                <div class="metric-label">In ${horizon} week(s)</div>
             </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Confidence Level</h3>
-                    <div class="card-icon"></div>
+            <div class="ai-insights">
+                <h3 class="chart-title">Prediction Analysis</h3>
+                <div class="insight-item">
+                    <strong>Student:</strong> ${student.name} (${student.id})
                 </div>
-                <div class="metric-value">${confidence}%</div>
-                <div class="metric-label">Model accuracy</div>
+                <div class="insight-item">
+                    <strong>AI Tool Dependency:</strong> ${result.ai_tool_dependency}%
+                </div>
+                <div class="insight-item">
+                    <strong>Recommendation:</strong> ${result.ai_tool_dependency > 80 ? 
+                        'Implement AI usage reduction strategy and increase hands-on learning activities' : 
+                        result.ai_tool_dependency > 60 ? 
+                        'Monitor AI tool usage and encourage independent problem-solving' : 
+                        'Continue current learning approach with periodic AI tool integration'}
+                </div>
             </div>
-        </div>
-        
-        <div class="ai-insights">
-            <h3 class="chart-title">Prediction Analysis</h3>
-            <div class="insight-item">
-                <strong>Student:</strong> ${student.name} (${student.id})
-            </div>
-            <div class="insight-item">
-                <strong>AI Tool Dependency:</strong> ${aiDependency}% - ${aiDependency > 80 ? 'High Risk' : aiDependency > 60 ? 'Medium Risk' : 'Low Risk'}
-            </div>
-            <div class="insight-item">
-                <strong>Performance Trend:</strong> ${trend.charAt(0).toUpperCase() + trend.slice(1)} (${predictedPerformance > currentPerformance ? '+' : ''}${(predictedPerformance - currentPerformance).toFixed(1)}%)
-            </div>
-            <div class="insight-item">
-                <strong>Recommendation:</strong> ${aiDependency > 80 ? 
-                    'Implement AI usage reduction strategy and increase hands-on learning activities' : 
-                    aiDependency > 60 ? 
-                    'Monitor AI tool usage and encourage independent problem-solving' : 
-                    'Continue current learning approach with periodic AI tool integration'}
-            </div>
-        </div>
-    `;
-    
-    predictionResults.style.display = 'block';
-    showNotification('Prediction generated successfully!');
+        `;
+        predictionResults.style.display = 'block';
+        showNotification('Prediction generated successfully!');
+    })
+    .catch(error => {
+        showNotification('Prediction failed. Please try again.', 'error');
+        predictionResults.style.display = 'none';
+    });
 }
 
 function saveSettings() {
