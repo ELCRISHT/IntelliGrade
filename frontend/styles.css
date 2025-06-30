@@ -393,6 +393,60 @@ header {
     color: var(--primary-black);
 }
 
+.tab-content#predictions-tab .controls-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 0;
+    align-items: stretch;
+}
+
+.tab-content#predictions-tab .controls-panel .control-group {
+    background: none;
+    box-shadow: none;
+    border: none;
+    padding: 0 0 12px 0;
+    margin-bottom: 0;
+}
+
+.tab-content#predictions-tab .controls-panel .control-group label {
+    margin-bottom: 4px;
+}
+
+.tab-content#predictions-tab .controls-panel .control-group input,
+.tab-content#predictions-tab .controls-panel .control-group select {
+    margin-bottom: 0;
+}
+
+/* Minimized input fields for Student ID and Prediction in Predictions tab */
+.tab-content#predictions-tab .controls-panel .control-group input[type="text"],
+.tab-content#predictions-tab .controls-panel .control-group input[type="number"] {
+    max-width: 150px;
+    padding: 6px 20px;
+    font-size: 13px;
+    border-radius: 6px;
+}
+
+/* Force Prediction select to match minimized input size in Predictions tab */
+.tab-content#predictions-tab .controls-panel .control-group select {
+    max-width: 150px;
+    padding: 6px 20px;
+    font-size: 13px;
+    border-radius: 6px;
+}
+
+.tab-content#predictions-tab .controls-panel .control-group label {
+    font-size: 13px;
+}
+
+.tab-content#predictions-tab .centered-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
 @media (max-width: 768px) {
     .dashboard-grid {
         grid-template-columns: 1fr;
