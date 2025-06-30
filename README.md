@@ -61,7 +61,6 @@ IntelliGrade/
 - **Reed Lajom**
 
 ## License
-This project is for academic and demonstration purposes.
 
 ---
 For questions or contributions, please contact the developers or open an issue on the [GitHub repository](https://github.com/ELCRISHT/IntelliGrade).
