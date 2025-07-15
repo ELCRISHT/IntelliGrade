@@ -9,7 +9,7 @@ IntelliGrade is a web application that provides a comprehensive dashboard for fo
 - **Interactive Dashboard:** Real-time metrics, charts, and student lists with risk assessments.
 - **Prediction Analysis:** Detailed recommendations and insights after each prediction.
 - **Responsive UI:** Black and white themed, cross-platform, and mobile-friendly.
-- **Seamless Frontend-Backend Integration:** Fast, reliable communication between the Flask backend and HTML/CSS/JS frontend.
+- **Frontend-Backend Integration:** Fast, reliable communication between the Flask backend and HTML/CSS/JS frontend.
 
 ## Getting Started
 
