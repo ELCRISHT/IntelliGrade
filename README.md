@@ -1,4 +1,4 @@
-# IntelliGrade: Multi-Model AI Dashboard for Forecasting Academic Performance
+# IntelliGrade: Multi-Model AI Dashboard for Forecasting Academic Performance (Under construction)
 
 IntelliGrade is a web application that provides a comprehensive dashboard for forecasting student academic performance based on patterns of AI tool dependency. It features a modern, responsive frontend and a Python Flask backend, offering real-time analytics, predictions, and actionable insights for educators and administrators.
 
